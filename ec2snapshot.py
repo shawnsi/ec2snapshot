@@ -1,15 +1,15 @@
 #!/usr/bin/python
 
-import boto.ec2
+import boto
+import boto.utils
 
-
-def get_instance_by_id(instance_id, region):
+def get_instance_by_id(instance_id):
 	"""
 	Returns the boto.ec2.Instance object with id `instance_id`.
 	"""
-	ec2 = boto.ec2.connect_to_region(region)
-	reservations = ec2.get_all_instances(instance_ids=[instance_id])
-	return reservations[0].instances[0]
+	ec2 = boto.connect_ec2()
+	instances = ec2.get_only_instances(instance_ids=[instance_id])
+	return instances[0]
 
 
 def get_volumes_by_instance(instance):
@@ -22,14 +22,17 @@ def get_volumes_by_instance(instance):
 	return [v for v in instance.connection.get_all_volumes() if attached(v)]
 
 
-def instance_id():
-	# Replace this with the appropriate instance from local instance metadata
-	metadata = boto.utils.get_instance_identity()['document']
-	return get_instance_by_id(metadata['instanceId'], metadata['region'])
+def local_instance():
+        """
+        Convenience wrapper for getting boto.ec2.Instance object that represents localhost.
+        """
+	metadata = boto.utils.get_instance_metadata()
+	return get_instance_by_id(metadata['instance-id'])
 
 
 if __name__ == '__main__':
 	instance = local_instance()
+
 	for volume in get_volumes_by_instance(instance):
 		volume.create_snapshot()
 
