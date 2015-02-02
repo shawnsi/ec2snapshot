@@ -1,15 +1,15 @@
 #!/usr/bin/python
 
-import boto.ec2
+import boto
 
 
-def get_instance_by_id(instance_id, region):
+def get_instance_by_id(instance_id):
 	"""
 	Returns the boto.ec2.Instance object with id `instance_id`.
 	"""
-	ec2 = boto.ec2.connect_to_region(region)
-	reservations = ec2.get_all_instances(instance_ids=[instance_id])
-	return reservations[0].instances[0]
+	ec2 = boto.connect_ec2()
+	instances = ec2.get_only_instances(instance_ids=[instance_id])
+	return instances[0]
 
 
 def get_volumes_by_instance(instance):
