@@ -8,6 +8,17 @@ Requirements
 
 The script depends on [boto](http://boto.readthedocs.org/en/latest/).  It has been tested on RHEL 6.5 on AWS successfully.
 
+Installation
+------------
+
+Install via pip:
+
+```bash
+$ git clone https://github.com/shawnsi/ec2snapshot.git
+$ cd ec2snapshot
+$ pip install .
+```
+
 Usage
 -----
 
