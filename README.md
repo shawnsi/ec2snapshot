@@ -1,6 +1,8 @@
 ec2snapshot
 ===========
 
+[![Build Status](https://travis-ci.org/shawnsi/ec2snapshot.png)](https://travis-ci.org/shawnsi/ec2snapshot)
+
 Snapshot EBS Devices Attached to EC2 Instances
 
 Requirements
@@ -27,7 +29,7 @@ This script is dead simple.  It expects to lookup the local instance information
 Run the script to snapshot all attached EBS volumes.
 
 ```bash
-$ python ec2snapshot.py
+$ ec2snapshot
 ```
 
 Trimming
