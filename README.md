@@ -1,12 +1,25 @@
 ec2snapshot
 ===========
 
+[![Build Status](https://travis-ci.org/shawnsi/ec2snapshot.png)](https://travis-ci.org/shawnsi/ec2snapshot)
+
 Snapshot EBS Devices Attached to EC2 Instances
 
 Requirements
 ------------
 
 The script depends on [boto](http://boto.readthedocs.org/en/latest/).  It has been tested on RHEL 6.5 on AWS successfully.
+
+Installation
+------------
+
+Install via pip:
+
+```bash
+$ git clone https://github.com/shawnsi/ec2snapshot.git
+$ cd ec2snapshot
+$ pip install .
+```
 
 Usage
 -----
@@ -16,7 +29,7 @@ This script is dead simple.  It expects to lookup the local instance information
 Run the script to snapshot all attached EBS volumes.
 
 ```bash
-$ python ec2snapshot.py
+$ ec2snapshot
 ```
 
 Trimming
