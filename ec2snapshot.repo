@@ -1,0 +1,6 @@
+[ec2snapshot]
+name=ec2snapshot
+baseurl=http://shawnsi.github.io/ec2snapshot/yum/
+enabled=1
+gpgcheck=1
+gpgkey=http://shawnsi.github.io/ec2snapshot/MEREDITH-RPM-GPG-KEY
