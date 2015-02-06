@@ -46,9 +46,11 @@ Assign an IAM Role to the EC2 instance with these permissions at a minimum.
 "Effect": "Allow",
 "Action": [
   "ec2:CreateSnapshot",
+  "ec2:CreateTags",
   "ec2:DeleteSnapshot",
   "ec2:DescribeInstances",
   "ec2:DescribeSnapshots",
+  "ec2:DescribeTags",
   "ec2:DescribeVolumes"
 ],
 "Resource": [

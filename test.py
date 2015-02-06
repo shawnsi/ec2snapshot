@@ -32,12 +32,12 @@ class Ec2SnapshotTestCase(unittest.TestCase):
 
     def test_get_instance_by_id(self):
         instance_id = self.instance_ids[0]
-        instance = get_instance_by_id(instance_id)
+        instance = get_instance_by_id(instance_id, 'us-east-1')
         self.assertEqual(instance.id, instance_id)
 
     def test_get_volumes_by_instance(self):
         instance_id = self.instance_ids[0]
-        instance = get_instance_by_id(instance_id)
+        instance = get_instance_by_id(instance_id, 'us-east-1')
 
         # Attach volumes to each instance
         for volume in self.volumes:

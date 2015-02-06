@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='ec2snapshot',
-    version='0.0.2',
+    version='0.0.3',
     author='Shawn Siefkas',
     author_email='shawn.siefkas@meredith.com',
     description='EBS Snapshots for EC2 Instances',

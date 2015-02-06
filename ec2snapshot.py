@@ -1,13 +1,15 @@
 #!/usr/bin/python
 
-import boto
+import boto.ec2
 import boto.utils
 
-def get_instance_by_id(instance_id):
+
+
+def get_instance_by_id(instance_id, region):
     """
     Returns the boto.ec2.Instance object with id `instance_id`.
     """
-    ec2 = boto.connect_ec2()
+    ec2 = boto.ec2.connect_to_region(region)
     instances = ec2.get_only_instances(instance_ids=[instance_id])
     return instances[0]
 
@@ -26,8 +28,8 @@ def local_instance():
     """
     Convenience wrapper for getting boto.ec2.Instance object that represents localhost.
     """
-    metadata = boto.utils.get_instance_metadata()
-    return get_instance_by_id(metadata['instance-id'])
+    metadata = boto.utils.get_instance_identity()['document']
+    return get_instance_by_id(metadata['instanceId'], metadata['region'])
 
 
 def main():
