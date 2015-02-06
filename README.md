@@ -13,12 +13,21 @@ The script depends on [boto](http://boto.readthedocs.org/en/latest/).  It has be
 Installation
 ------------
 
-Install via pip:
+### Pip
 
 ```bash
 $ git clone https://github.com/shawnsi/ec2snapshot.git
 $ cd ec2snapshot
 $ pip install .
+```
+
+### Yum
+
+The github pages site for this project hosts a yum repository.
+
+```
+$ curl -o /etc/yum.repos.d/ec2snapshot.repo https://raw.githubusercontent.com/shawnsi/ec2snapshot/0.0.3/ec2snapshot.repo
+$ yum install ec2snapshot
 ```
 
 Usage
