@@ -1,7 +1,7 @@
 ec2snapshot
 ===========
 
-[![Build Status](https://travis-ci.org/shawnsi/ec2snapshot.png)](https://travis-ci.org/shawnsi/ec2snapshot)
+[![Build Status](https://travis-ci.org/shawnsi/ec2snapshot.png?branch=master)](https://travis-ci.org/shawnsi/ec2snapshot)
 
 Snapshot EBS Devices Attached to EC2 Instances
 
