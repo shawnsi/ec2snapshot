@@ -1,41 +1,49 @@
 #!/usr/bin/python
 
-import boto.ec2
-import boto.utils
+from __future__ import print_function
 
+import boto3
 
-
-def get_instance_by_id(instance_id, region):
-    """
-    Returns the boto.ec2.Instance object with id `instance_id`.
-    """
-    ec2 = boto.ec2.connect_to_region(region)
-    instances = ec2.get_only_instances(instance_ids=[instance_id])
-    return instances[0]
-
+ec2 = boto3.resource('ec2')
 
 def get_volumes_by_instance(instance):
     """
-    Returns a list of volumes attached to `instance`.
+    Generator that returns pairs of device name and volume objects for all non
+    root EBS volumes on an instance.
     """
-    def attached(volume):
-        return volume.attach_data.instance_id == instance.id
+    for mapping in instance.block_device_mappings:
+        if 'Ebs' in mapping:
+            if mapping['DeviceName'] != instance.root_device_name:
+                yield mapping['DeviceName'], ec2.Volume(mapping['Ebs']['VolumeId'])
 
-    return [v for v in instance.connection.get_all_volumes() if attached(v)]
-
-
-def local_instance():
+def instance_name(instance):
     """
-    Convenience wrapper for getting boto.ec2.Instance object that represents localhost.
+    Returns the value of the "Name" tag for an instance if present.
     """
-    metadata = boto.utils.get_instance_identity()['document']
-    return get_instance_by_id(metadata['instanceId'], metadata['region'])
+    for tag in instance.tags:
+        if tag['Key'] == 'Name':
+            return "(%s)" % tag['Value']
 
+def lambda_handler(event, context):
+    # Load the runtime filters
+    if not 'filters' in event:
+        event['filters'] = []
 
-def main():
-    instance = local_instance()
+    # Iterate over filtered instances and snapshot volumes
+    for instance in ec2.instances.filter(Filters=event['filters']):
+        for device, volume in get_volumes_by_instance(instance):
+            # Minimum description is instance id and device name
+            description = '%s:%s' % (instance.id, device)
 
-    for volume in get_volumes_by_instance(instance):
-        volume.create_snapshot()
+            # If available append the EC2 instance name
+            name = instance_name(instance)
+            if name:
+                description += " %s" % name
 
-    instance.connection.trim_snapshots()
+            # Take the snapshots
+            volume.create_snapshot(
+                Description=description
+            )
+
+# The trim_snapshots method is not in boto3.  Need to build a replacment.
+# instance.connection.trim_snapshots()

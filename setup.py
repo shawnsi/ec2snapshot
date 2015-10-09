@@ -9,13 +9,10 @@ setup(
     author_email='shawn.siefkas@meredith.com',
     description='EBS Snapshots for EC2 Instances',
     install_requires=[
-        'boto>=2.11.0',
+        'boto3',
     ],
     test_suite = 'test',
-    py_modules = ['ec2snapshot'],
-    entry_points={
-        'console_scripts': ['ec2snapshot=ec2snapshot:main']
-    },
+    py_modules = ['ec2snapshot']
 )
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
