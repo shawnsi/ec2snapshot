@@ -56,5 +56,5 @@ Scheduled execution must be set up manually in the lambda console until boto3 ad
 
 ### Trimming
 
-The builtin [boto.ec2.trim_snapshots](http://boto.readthedocs.org/en/latest/ref/ec2.html?highlight=trim_snapshot#boto.ec2.connection.EC2Connection.trim_snapshots) method was not carried over to boto3.  A solution is pending.
+The builtin [boto.ec2.trim_snapshots](http://boto.readthedocs.org/en/latest/ref/ec2.html?highlight=trim_snapshot#boto.ec2.connection.EC2Connection.trim_snapshots) method was not carried over to boto3.  I've opened an [issue](https://github.com/boto/boto3/issues/298) on the boto3 project to track this.
 
