@@ -45,5 +45,21 @@ def lambda_handler(event, context):
                 Description=description
             )
 
-# The trim_snapshots method is not in boto3.  Need to build a replacment.
-# instance.connection.trim_snapshots()
+    trim_snapshots()
+
+# boto legacy import to preserve trim_snapshots() behavior
+def local_instance():
+    """
+    Convenience wrapper for getting boto.ec2.Instance object that represents localhost.
+    """
+    metadata = boto.utils.get_instance_identity()['document']
+    return get_instance_by_id(metadata['instanceId'], metadata['region'])
+
+def trim_snapshots():
+    import boto.ec2
+    import boto.utils
+
+    metadata = boto.utils.get_instance_identity()['document']
+    connection = boto.ec2.connect_to_region(metadata['region'])
+
+    connection.trim_snapshots()
