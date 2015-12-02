@@ -4,9 +4,7 @@ from __future__ import print_function
 
 import boto3
 
-ec2 = boto3.resource('ec2')
-
-def get_volumes_by_instance(instance):
+def get_volumes_by_instance(ec2, instance):
     """
     Generator that returns pairs of device name and volume objects for all non
     root EBS volumes on an instance.
@@ -29,9 +27,11 @@ def lambda_handler(event, context):
     if not 'filters' in event:
         event['filters'] = []
 
+    ec2 = boto3.resource('ec2')
+
     # Iterate over filtered instances and snapshot volumes
     for instance in ec2.instances.filter(Filters=event['filters']):
-        for device, volume in get_volumes_by_instance(instance):
+        for device, volume in get_volumes_by_instance(ec2, instance):
             # Minimum description is instance id and device name
             description = '%s:%s' % (instance.id, device)
 
