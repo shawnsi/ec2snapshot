@@ -4,7 +4,7 @@ from __future__ import print_function
 
 import sys
 from tempfile import TemporaryFile
-from zipfile import ZipFile
+from zipfile import PyZipFile
 
 import boto3
 from botocore.exceptions import ClientError
@@ -76,8 +76,9 @@ except ClientError as e:
 lambda_client = boto3.client('lambda', region_name='us-east-1')
 
 with TemporaryFile() as f:
-    with ZipFile(f, 'w') as z:
+    with PyZipFile(f, 'w') as z:
         z.write('ec2snapshot.py')
+        z.write('boto')
 
     f.seek(0)
 

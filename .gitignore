@@ -23,6 +23,7 @@ sdist/
 share/
 var/
 *.egg-info/
+*.dist-info/
 .installed.cfg
 *.egg
 
