@@ -24,13 +24,13 @@ def instance_name(instance):
 
 def lambda_handler(event, context):
     # Load the runtime filters
-    if not 'filters' in event:
-        event['filters'] = []
+    if not 'Filters' in event:
+        event['Filters'] = []
 
     ec2 = boto3.resource('ec2')
 
     # Iterate over filtered instances and snapshot volumes
-    for instance in ec2.instances.filter(Filters=event['filters']):
+    for instance in ec2.instances.filter(Filters=event['Filters']):
         for device, volume in get_volumes_by_instance(ec2, instance):
             # Minimum description is instance id and device name
             description = '%s:%s' % (instance.id, device)

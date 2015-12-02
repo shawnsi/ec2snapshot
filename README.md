@@ -29,7 +29,7 @@ The lambda function can be passed filters as runtime to restrict which EC2 insta
 
 ```json
 {
-  "filters": [
+  "Filters": [
         {
             "Name": "tag:Name",
             "Values": [
